@@ -1,3 +1,15 @@
+/**
+
+Autor: Joel Krec
+
+Datum: 26.04.2022
+
+Ein Programm um ein Datum in die Anzahl an Tagen von dem Anfang des Jahres bis zu dem Datum herauszufinden.
+Das Enddatum ist mit inklusive.
+
+**/
+
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -83,6 +95,7 @@ int main()
     return 0;
 }
 
+//Ueberprueft das gegebene Jahr auf Schaltjahre
 int is_leapyear(int year)
 {
     int leapyear = 0;
@@ -106,6 +119,7 @@ int is_leapyear(int year)
     return leapyear;
 }
 
+//Gibt die maximale Anzahl an Tagen in einem gegebenen Monat und Jahr zurueck
 int get_days_for_month(int month, int year)
 {
     int days_in_month[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
@@ -131,6 +145,7 @@ int get_days_for_month(int month, int year)
     return days;
 }
 
+//Ueberprueft ein gegebenes Datum auf Validitaet
 int exists_date(int day, int month, int year)
 {
     int valid = 0;
@@ -153,6 +168,7 @@ int exists_date(int day, int month, int year)
     return valid;
 }
 
+//Berechnet die Tage zu dem gegebenen Enddatum
 int day_of_the_year(int day, int month, int year)
 {
     int days = 0;
