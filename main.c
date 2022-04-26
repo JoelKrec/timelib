@@ -20,7 +20,6 @@ int main()
     int jahr = 0;
     int monat = 0;
     int tag = 0;
-    int schaltjahr = 0;
     int tageImJahr = 0;
 
     int invalide = 0;
@@ -47,9 +46,6 @@ int main()
             break;
         }
 
-        //Schaltjahrberrechnung
-        schaltjahr = is_leapyear(jahr);
-
         //Eingabe Monat
         do
         {
@@ -62,8 +58,6 @@ int main()
         {
             printf("\nGeben Sie einen Tag ein: ");
             scanf("%i", &tag);
-
-            int invalide = 1;
 
             if(tag < get_days_for_month(monat, jahr))
             {
@@ -86,7 +80,7 @@ int main()
         tageImJahr = day_of_the_year(tag, monat, jahr);
 
         //Ausgabe
-        printf("\nDer %02i.%02i.%04i ist der %i. Tag im Jahr\n \n***Ende Tag des Jahres***\n \n", tag, monat, jahr, tageImJahr);
+        printf("\nDer %02i.%02i.%04i ist der %i. Tag im Jahr\nEs ist an dem Datum ein %s \n \n***Ende Tag des Jahres***\n \n", tag, monat, jahr, tageImJahr, get_week_day(tag, monat, jahr));
     }
     return 0;
 }

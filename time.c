@@ -12,7 +12,7 @@ int is_leapyear(int year)
 
     if(year > 1582)
     {
-        if(year % 400 == 0 || year % 100 != 0 && year % 4 == 0)
+        if(year % 400 == 0 || (year % 100 != 0 && year % 4 == 0))
         {
             leapyear = 1;
         }
@@ -88,4 +88,24 @@ int day_of_the_year(int day, int month, int year)
     }
     days += day;
     return days;
+}
+//Benutzung der Regel Zellers | Sonntag = 0, Montag = 1, usw... | Code erhalten auf https://www.rosettacode.org/wiki/Day_of_the_week#C
+int get_week_day_in_int(int day, int month, int year)
+{
+    int adjustment, mm, yy;
+
+	adjustment = (14 - month) / 12;
+	mm = month + 12 * adjustment - 2;
+	yy = year - adjustment;
+	return (day + (13 * mm - 1) / 5 +
+		yy + yy / 4 - yy / 100 + yy / 400) % 7;
+}
+
+//Berechnet den Wochentag eines Datums und gibt einen Zeiger char wieder
+char *get_week_day(int day, int month, int year)
+{
+    int weekday = get_week_day_in_int(day, month, year);
+    char *weekdays[7] = {"Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"};
+
+    return weekdays[weekday];
 }
