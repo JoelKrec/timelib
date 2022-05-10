@@ -22,12 +22,16 @@ int main()
 
     while(1)
     {
+        //Ueberschrift
         printf("***Tag des Jahres ***\n\n");
 
+        //Eingabe und Abbruchueberpruefung
         do
         {
+            //eingabe
             target_date = input_date();
 
+            //Abbruchueberpruefung
             if(target_date.year == -666)
             {
                 return 0;
@@ -38,8 +42,9 @@ int main()
         //TageImJahr berechnen
         tageImJahr = day_of_the_year(target_date);
 
-
+        //Wochentag berechen
         int kalenderwoche = get_week_count(target_date);
+
         //Ausgabe
         printf("\nDer %02i.%02i.%04i ist der %i. Tag im Jahr\nEs ist an dem Datum ein %s \n \n***Ende Tag des Jahres***\n \n",
                target_date.day, target_date.month, target_date.year, tageImJahr, get_week_day(target_date));
