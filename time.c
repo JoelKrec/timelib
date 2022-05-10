@@ -109,3 +109,56 @@ char *get_week_day(int day, int month, int year)
 
     return weekdays[weekday];
 }
+
+//Berechnet die Kalenderwoche für ein Datum nach ISO 8601: Erster Donnerstag des Jahres entspricht der ersten Kalenderwoche
+int get_week_count(int day, int month, int year)
+{
+
+}
+
+void *input_date(int *day, int *month, int *year)
+{
+    int invalid = 0;
+
+    //Eingabe Jahr
+    do
+    {
+        printf("Geben Sie ein Jahr ein - '-666' zum Beenden: ");
+        scanf("%i", year);
+
+        if(*year == -666)
+        {
+            break;
+        }
+    }while(*year < 1);
+
+    //Abbruchbedingung
+    if(*year == -666)
+    {
+        return;
+    }
+
+    //Eingabe Monat
+    do
+    {
+        printf("\nGeben Sie einen Monat ein: ");
+        scanf("%i", month);
+    }while(*month < 1 || *month > 12);
+
+    //Eingabe Tag
+    do
+    {
+        printf("\nGeben Sie einen Tag ein: ");
+        scanf("%i", day);
+
+        if(*day < get_days_for_month(*month, *year) && *day > 0)
+        {
+            invalid = 0;
+        }
+        else
+        {
+            invalid = 1;
+        }
+
+    }while(invalid == 1);
+}
