@@ -17,12 +17,8 @@ Das Enddatum ist mit inklusive.
 
 int main()
 {
-    int jahr = 0;
-    int monat = 0;
-    int tag = 0;
+    struct date target_date;
     int tageImJahr = 0;
-
-    int invalide = 0;
 
     while(1)
     {
@@ -30,22 +26,23 @@ int main()
 
         do
         {
-            input_date(&tag, &monat, &jahr);
+            target_date = input_date();
 
-            if(jahr == -666)
+            if(target_date.year == -666)
             {
                 return 0;
             }
 
-        }while(!exists_date(tag, monat, jahr));
+        }while(!exists_date(target_date));
 
         //TageImJahr berechnen
-        tageImJahr = day_of_the_year(tag, monat, jahr);
+        tageImJahr = day_of_the_year(target_date);
 
 
-        int kalenderwoche = get_week_count(tag, monat, jahr);
+        int kalenderwoche = get_week_count(target_date);
         //Ausgabe
-        printf("\nDer %02i.%02i.%04i ist der %i. Tag im Jahr\nEs ist an dem Datum ein %s \n \n***Ende Tag des Jahres***\n \n", tag, monat, jahr, tageImJahr, get_week_day(tag, monat, jahr));
+        printf("\nDer %02i.%02i.%04i ist der %i. Tag im Jahr\nEs ist an dem Datum ein %s \n \n***Ende Tag des Jahres***\n \n",
+               target_date.day, target_date.month, target_date.year, tageImJahr, get_week_day(target_date));
     }
     return 0;
 }

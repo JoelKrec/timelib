@@ -5,6 +5,7 @@
 #include "time.h"
 
 
+
 //Ueberprueft das gegebene Jahr auf Schaltjahre
 int is_leapyear(int year)
 {
@@ -56,13 +57,13 @@ int get_days_for_month(int month, int year)
 }
 
 //Ueberprueft ein gegebenes Datum auf Validitaet
-int exists_date(int day, int month, int year)
+int exists_date(struct date target_date)
 {
     int valid = 0;
 
-    if(year >= 1582 && month <= 12 && month >= 1 && year <= 2400)
+    if(target_date.year >= 1582 && target_date.month <= 12 && target_date.month >= 1 && target_date.year <= 2400)
     {
-        if(day <= get_days_for_month(month, year) && day >= 1)
+        if(target_date.day <= get_days_for_month(target_date.month, target_date.year) && target_date.day >= 1)
         {
             valid = 1;
         }
@@ -79,79 +80,75 @@ int exists_date(int day, int month, int year)
 }
 
 //Berechnet die Tage zu dem gegebenen Enddatum
-int day_of_the_year(int day, int month, int year)
+int day_of_the_year(struct date target_date)
 {
     int days = 0;
-    for(int i = 1; i < month; i++)
+    for(int i = 1; i < target_date.month; i++)
     {
-        days += get_days_for_month(i, year);
+        days += get_days_for_month(i, target_date.year);
     }
-    days += day;
+    days += target_date.day;
     return days;
 }
 //Benutzung der Regel Zellers | Sonntag = 0, Montag = 1, usw... | Code erhalten auf https://www.rosettacode.org/wiki/Day_of_the_week#C
-int get_week_day_in_int(int day, int month, int year)
+int get_week_day_in_int(struct date target_date)
 {
     int adjustment, mm, yy;
 
-	adjustment = (14 - month) / 12;
-	mm = month + 12 * adjustment - 2;
-	yy = year - adjustment;
-	return (day + (13 * mm - 1) / 5 +
+	adjustment = (14 - target_date.month) / 12;
+	mm = target_date.month + 12 * adjustment - 2;
+	yy = target_date.year - adjustment;
+	return (target_date.day + (13 * mm - 1) / 5 +
 		yy + yy / 4 - yy / 100 + yy / 400) % 7;
 }
 
 //Berechnet den Wochentag eines Datums und gibt einen Zeiger char wieder
-char *get_week_day(int day, int month, int year)
+char *get_week_day(struct date target_date)
 {
-    int weekday = get_week_day_in_int(day, month, year);
+    int weekday = get_week_day_in_int(target_date);
     char *weekdays[7] = {"Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"};
 
     return weekdays[weekday];
 }
 
 //Berechnet die Kalenderwoche für ein Datum nach ISO 8601: Erster Donnerstag des Jahres entspricht der ersten Kalenderwoche
-int get_week_count(int day, int month, int year)
+int get_week_count(struct date target_date)
 {
 
 }
 
-void *input_date(int *day, int *month, int *year)
+struct date input_date()
 {
     int invalid = 0;
+    struct date target_date;
 
     //Eingabe Jahr
     do
     {
         printf("Geben Sie ein Jahr ein - '-666' zum Beenden: ");
-        scanf("%i", year);
+        scanf("%i", &target_date.year);
 
-        if(*year == -666)
+        if(target_date.year == -666)
         {
-            break;
+            return target_date;
         }
-    }while(*year < 1);
+    }while(target_date.year < 1);
 
-    //Abbruchbedingung
-    if(*year == -666)
-    {
-        return;
-    }
 
     //Eingabe Monat
     do
     {
         printf("\nGeben Sie einen Monat ein: ");
-        scanf("%i", month);
-    }while(*month < 1 || *month > 12);
+        scanf("%i", &target_date.month);
+    }while(target_date.month < 1 || target_date.month > 12);
 
     //Eingabe Tag
     do
     {
         printf("\nGeben Sie einen Tag ein: ");
-        scanf("%i", day);
+        scanf("%i", &target_date.day);
 
-        if(*day < get_days_for_month(*month, *year) && *day > 0)
+        if(target_date.day < get_days_for_month(target_date.month, target_date.year) && target_date.day > 0)
         {
             invalid = 0;
         }
@@ -161,4 +158,6 @@ void *input_date(int *day, int *month, int *year)
         }
 
     }while(invalid == 1);
+
+    return target_date;
 }
